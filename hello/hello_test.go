@@ -10,13 +10,23 @@ func TestGreet(t *testing.T) {
 		}
 	}
 	t.Run("Greeting with argument", func(t *testing.T) {
-		got := Greet("Yash")
+		got := Greet("Yash", "english")
 		want := "Hello, Yash!"
 		assertCorrectMessage(t, got, want)
 	})
 	t.Run("Greeting with empty string", func(t *testing.T) {
-		got := Greet("")
+		got := Greet("", "english")
 		want := "Hello, World!"
+		assertCorrectMessage(t, got, want)
+	})
+	t.Run("Greet in Spanish", func(t *testing.T) {
+		got := Greet("Alba", "spanish")
+		want := "Hola, Alba!"
+		assertCorrectMessage(t, got, want)
+	})
+	t.Run("Greet in French", func(t *testing.T) {
+		got := Greet("Amelia", "french")
+		want := "Bonjour, Amelia!"
 		assertCorrectMessage(t, got, want)
 	})
 }
