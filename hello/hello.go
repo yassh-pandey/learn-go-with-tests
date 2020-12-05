@@ -2,9 +2,14 @@ package main
 
 import "fmt"
 
+const englishHelloPrefix string = "Hello, "
+
 //Greet greets the user
 func Greet(name string) string {
-	return fmt.Sprintf("Hello, %s!", name)
+	if name == "" {
+		name = "World"
+	}
+	return fmt.Sprintf("%s%s!", englishHelloPrefix, name)
 }
 func main() {
 	fmt.Println(Greet("Yash"))
