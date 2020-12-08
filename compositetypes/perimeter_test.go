@@ -1,10 +1,11 @@
 package compositetypes
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPerimeter(t *testing.T) {
 	assert := func(t *testing.T, expect, got float64) {
-		t.Helper()
 		if expect != got {
 			t.Errorf("Expected %g but got: %g", expect, got)
 		}
@@ -59,21 +60,50 @@ func TestPerimeter(t *testing.T) {
 // 	})
 // }
 
-// Notice how concise has the code testing code become by making use of interfaces 
+// Notice how concise has the code testing code become by making use of interfaces
+// func TestArea(t *testing.T) {
+// 	testArea := func(t *testing.T, shape Shape, want float64) {
+// 		t.Helper()
+// 		got := shape.Area()
+// 		if got != want {
+// 			t.Errorf("Expected: %g but got: %g", got, want)
+// 		}
+// 	}
+// 	t.Run("Rectangle area test", func(t *testing.T) {
+// 		rect := Rectangle{30, 17}
+// 		testArea(t, rect, 510.0)
+// 	})
+// 	t.Run("Circle area test", func(t *testing.T) {
+// 		circle := Circle{15}
+// 		testArea(t, circle, 706.8583470577034)
+// 	})
+// }
+
+// Table Driven Tests
 func TestArea(t *testing.T) {
-	testArea := func(t *testing.T, shape Shape, want float64) {
-		t.Helper()
-		got := shape.Area()
-		if got != want {
-			t.Errorf("Expected: %g but got: %g", got, want)
+	testCases := []struct {
+		shape Shape
+		want  float64
+	}{
+		{shape: Rectangle{Width: 10, Height: 20}, want: 200.0},
+		{shape: Circle{Radius: 15}, want: 706.8583470577034},
+		{shape: Triangle{Base: 17, Height: 22}, want: 187.0},
+	}
+
+	for _, tt := range testCases {
+		shapeType := ""
+		switch tt.shape.(type) {
+		case Rectangle:
+			shapeType = "Rectangle"
+		case Circle:
+			shapeType = "Circle"
+		case Triangle:
+			shapeType = "Triangle"
+		}
+		got := tt.shape.Area()
+		if got != tt.want {
+			t.Errorf("Expected: %g but got: %g for shape %s %+v", tt.want, got, shapeType, tt.shape)
 		}
 	}
-	t.Run("Rectangle area test", func(t *testing.T) {
-		rect := Rectangle{30, 17}
-		testArea(t, rect, 510.0)
-	})
-	t.Run("Circle area test", func(t *testing.T) {
-		circle := Circle{15}
-		testArea(t, circle, 706.8583470577034)
-	})
+
 }

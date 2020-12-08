@@ -2,7 +2,7 @@ package compositetypes
 
 import "math"
 
-// Shape interface d efines a generic geometric shape that has an area function
+// Shape interface defines a generic geometric shape that has an area function
 type Shape interface {
 	Area() float64
 }
@@ -36,4 +36,15 @@ func (c Circle) Perimeter() float64 {
 // Area method for type Circle
 func (c Circle) Area() float64 {
 	return math.Pi * math.Pow(c.Radius, 2)
+}
+
+// Triangle is a closed polygon with three sides
+type Triangle struct {
+	Base   float64
+	Height float64
+}
+
+// Area method for shape triangle
+func (t Triangle) Area() float64 {
+	return 0.5 * t.Base * t.Height
 }
